@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, Filter, Plus, ChevronDown, Edit, Trash2, Save, FileText, Calendar, Link as LinkIcon, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -309,7 +308,7 @@ const Notes = () => {
                   </div>
                 ) : (
                   // View mode
-                  <div className="space-y-3 animate-enter">
+                  <div className="space-y-3">
                     <div className="flex justify-between items-start">
                       <h3 className="font-medium text-lg">{note.title}</h3>
                       <div className="flex items-center gap-1">
@@ -327,7 +326,7 @@ const Notes = () => {
                     </p>
                     
                     <div className="pt-2">
-                      <Badge variant="outline">{note.category}</Badge>
+                      <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">{note.category}</Badge>
                     </div>
                     
                     {note.linkedItems && note.linkedItems.length > 0 && (
@@ -342,7 +341,7 @@ const Notes = () => {
                             >
                               <Badge 
                                 variant="secondary" 
-                                className="text-xs flex items-center gap-1 hover:bg-secondary/80 transition-colors"
+                                className="text-xs bg-secondary/50 flex items-center gap-1 hover:bg-secondary/80 transition-colors"
                               >
                                 {item.type === "person" ? (
                                   <><User className="h-3 w-3" /> {item.name}</>
@@ -359,7 +358,7 @@ const Notes = () => {
                 )}
               </div>
               
-              <div className="bg-muted/30 px-4 py-2 flex items-center justify-between text-xs text-muted-foreground border-t">
+              <div className="bg-muted/30 px-4 py-2 flex items-center justify-between text-xs text-muted-foreground border-t border-muted/20">
                 <div className="flex items-center">
                   <Calendar className="h-3 w-3 mr-1" />
                   <span>{note.date}</span>
