@@ -170,7 +170,7 @@ const Persons = () => {
                 className="group"
                 style={{ "--index": index } as React.CSSProperties}
               >
-                <Card className="h-full overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg animate-enter">
+                <Card className="glass-panel h-full border-muted/30 hover:border-primary/50 transition-all duration-300">
                   <CardContent className="p-5">
                     <div className="flex justify-between items-start mb-3">
                       <div className="h-10 w-10 rounded-full bg-muted/70 flex items-center justify-center">
@@ -179,7 +179,7 @@ const Persons = () => {
                       <Badge 
                         variant="outline" 
                         className={`
-                          ${person.status === "Deceased" ? "bg-red-50 text-red-700 border-red-200" : "bg-green-50 text-green-700 border-green-200"}
+                          ${person.status === "Deceased" ? "bg-red-950/30 text-red-400 border-red-500/30" : "bg-green-950/30 text-green-400 border-green-500/30"}
                         `}
                       >
                         {person.status}
@@ -190,13 +190,13 @@ const Persons = () => {
                     
                     <div className="flex flex-wrap gap-1 mt-3">
                       {person.tags.map((tag, i) => (
-                        <Badge key={i} variant="secondary" className="text-xs">
+                        <Badge key={i} variant="secondary" className="text-xs bg-secondary/50">
                           {tag}
                         </Badge>
                       ))}
                     </div>
                     
-                    <div className="mt-4 pt-3 border-t flex items-center justify-between text-xs text-muted-foreground">
+                    <div className="mt-4 pt-3 border-t border-muted/20 flex items-center justify-between text-xs text-muted-foreground">
                       <span>{person.connections} connections</span>
                       <span>Updated {person.lastUpdated}</span>
                     </div>
