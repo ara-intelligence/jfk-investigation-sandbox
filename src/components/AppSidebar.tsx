@@ -5,7 +5,8 @@ import {
   Clock, 
   Users, 
   BookOpen,
-  Search 
+  Search,
+  BarChart3
 } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 
@@ -47,6 +48,11 @@ const menuItems = [
     title: "Investigation Notes",
     path: "/notes",
     icon: BookOpen,
+  },
+  {
+    title: "Global Search",
+    path: "/search",
+    icon: Search,
   },
 ];
 
@@ -91,7 +97,7 @@ export function AppSidebar() {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <input
                 type="search"
-                placeholder="Search case files..."
+                placeholder="Quick search case files..."
                 className="w-full rounded-md border border-input bg-background py-2 pl-8 pr-3 text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               />
             </div>

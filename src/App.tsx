@@ -5,23 +5,50 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 // Layout components
 import Layout from "./components/Layout";
 import LoadingFallback from "./components/LoadingFallback";
 
-// Lazy loaded pages for better performance
-const Dashboard = lazy(() => import("./pages/Dashboard"));
-const Documents = lazy(() => import("./pages/Documents"));
+// Eagerly load commonly accessed pages for faster transitions
+import Dashboard from "./pages/Dashboard";
+import Documents from "./pages/Documents";
+import Persons from "./pages/Persons";
+import Notes from "./pages/Notes";
+
+// Lazy load less frequently accessed pages
 const DocumentViewer = lazy(() => import("./pages/DocumentViewer"));
-const Persons = lazy(() => import("./pages/Persons"));
 const PersonDetail = lazy(() => import("./pages/PersonDetail"));
 const Timeline = lazy(() => import("./pages/Timeline"));
-const Notes = lazy(() => import("./pages/Notes"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Search = lazy(() => import("./pages/Search"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      cacheTime: 1000 * 60 * 30, // 30 minutes
+    },
+  },
+});
+
+// Create a minimal loading wrapper to reduce loading flicker
+const MinimalSuspense = ({ children }: { children: React.ReactNode }) => {
+  const [showLoader, setShowLoader] = useState(false);
+  
+  useEffect(() => {
+    // Only show loading screen if loading takes more than 150ms
+    const timer = setTimeout(() => setShowLoader(true), 150);
+    return () => clearTimeout(timer);
+  }, []);
+  
+  return (
+    <Suspense fallback={showLoader ? <LoadingFallback /> : null}>
+      {children}
+    </Suspense>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -30,7 +57,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Suspense fallback={<LoadingFallback />}>
+          <MinimalSuspense>
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Dashboard />} />
@@ -40,10 +67,11 @@ const App = () => (
                 <Route path="persons/:id" element={<PersonDetail />} />
                 <Route path="timeline" element={<Timeline />} />
                 <Route path="notes" element={<Notes />} />
+                <Route path="search" element={<Search />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
-          </Suspense>
+          </MinimalSuspense>
         </BrowserRouter>
       </SidebarProvider>
     </TooltipProvider>
