@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Search, Filter, Plus, ChevronDown, Edit, Trash2, Save, FileText, Calendar, Link as LinkIcon } from "lucide-react";
+import { Search, Filter, Plus, ChevronDown, Edit, Trash2, Save, FileText, Calendar, Link as LinkIcon, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
