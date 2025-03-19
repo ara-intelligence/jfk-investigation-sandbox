@@ -7,54 +7,54 @@
 
 @layer base {
   :root {
-    /* Dark FBI/CSI theme by default */
-    --background: 220 20% 10%;
-    --foreground: 210 40% 98%;
+    /* Green/Amber Hacker Theme */
+    --background: 150 15% 8%;
+    --foreground: 120 30% 90%;
 
-    --card: 222 25% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 150 20% 12%;
+    --card-foreground: 120 30% 90%;
 
-    --popover: 222 25% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 150 20% 12%;
+    --popover-foreground: 120 30% 90%;
 
-    --primary: 210 90% 60%;
+    --primary: 120 70% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 25% 25%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 150 15% 20%;
+    --secondary-foreground: 120 30% 90%;
 
-    --muted: 217 25% 20%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 150 15% 20%;
+    --muted-foreground: 120 15% 70%;
 
-    --accent: 215 25% 25%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 150 15% 20%;
+    --accent-foreground: 120 30% 90%;
 
     --destructive: 0 62.8% 40.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 120 30% 90%;
 
-    --border: 217 18% 20%;
-    --input: 217 18% 20%;
-    --ring: 210 90% 60%;
+    --border: 150 15% 18%;
+    --input: 150 15% 18%;
+    --ring: 120 70% 50%;
 
     --radius: 0.375rem;
 
     /* Sidebar */
-    --sidebar-background: 223 30% 8%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 210 90% 60%;
+    --sidebar-background: 150 20% 6%;
+    --sidebar-foreground: 120 30% 90%;
+    --sidebar-primary: 120 70% 50%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 215 25% 20%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 223 25% 16%;
-    --sidebar-ring: 210 90% 60%;
+    --sidebar-accent: 150 15% 15%;
+    --sidebar-accent-foreground: 120 30% 90%;
+    --sidebar-border: 150 15% 14%;
+    --sidebar-ring: 120 70% 50%;
 
     /* Investigation-specific colors */
-    --evidence: 0 80% 60%;
+    --evidence: 120 70% 50%;
     --evidence-foreground: 0 0% 98%;
-    --classified: 350 80% 55%;
-    --classified-foreground: 0 0% 98%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 98%;
+    --classified: 39 90% 55%;
+    --classified-foreground: 0 0% 10%;
+    --warning: 39 90% 55%;
+    --warning-foreground: 0 0% 10%;
   }
 }
 
@@ -67,7 +67,7 @@
     @apply bg-background text-foreground font-sans transition-colors duration-300;
     font-family: 'Inter', sans-serif;
     background-image: 
-      linear-gradient(to bottom, rgba(10, 15, 25, 0.7), rgba(10, 15, 25, 0.9)),
+      linear-gradient(to bottom, rgba(10, 30, 15, 0.8), rgba(10, 30, 15, 0.9)),
       var(--csi-texture);
     background-size: 100%, 50px 50px;
   }
@@ -142,8 +142,36 @@
 
   .grid-bg {
     background-size: 50px 50px;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-image: linear-gradient(to right, rgba(0, 255, 127, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0, 255, 127, 0.05) 1px, transparent 1px);
+  }
+
+  .hacker-btn {
+    @apply bg-primary/20 hover:bg-primary/30 transition-colors duration-300 border border-primary/40 
+           text-primary font-mono uppercase text-sm py-1.5 px-3 tracking-wider;
+  }
+
+  .crt-effect {
+    @apply relative overflow-hidden;
+    text-shadow: 0 0 2px theme('colors.primary.DEFAULT');
+  }
+
+  .crt-effect::before {
+    content: "";
+    @apply absolute inset-0 pointer-events-none bg-primary/5 animate-flicker;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 0.05; }
+    50% { opacity: 0.02; }
+  }
+
+  .terminal-panel {
+    @apply bg-black/70 border border-primary/30 font-mono text-sm;
+  }
+
+  .hacker-menu-item {
+    @apply hover:bg-primary/20 hover:text-primary transition-colors duration-150 font-mono;
   }
 
   @keyframes enter {
@@ -152,3 +180,4 @@
     }
   }
 }
+
