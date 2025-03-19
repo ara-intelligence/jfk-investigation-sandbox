@@ -273,8 +273,8 @@ const Documents = () => {
                   className="group"
                   style={{ "--index": index } as React.CSSProperties}
                 >
-                  <Card className="h-full overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg animate-enter">
-                    <CardContent className="p-5">
+                  <Card className="h-full overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg">
+                    <CardContent className="p-5 animate-enter">
                       <div className="flex justify-between items-start mb-3">
                         {getDocIcon(doc.type)}
                         {getClassificationBadge(doc.classification)}

@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -175,9 +174,13 @@
   }
 
   @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
     to {
-      @apply opacity-100 translate-y-0;
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
-
