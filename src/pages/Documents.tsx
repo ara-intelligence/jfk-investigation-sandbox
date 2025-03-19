@@ -171,12 +171,12 @@ const Documents = () => {
   const getClassificationBadge = (classification: string) => {
     switch (classification) {
       case "Declassified":
-        return <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">Declassified</Badge>;
+        return <Badge variant="outline" className="bg-amber-950/30 text-amber-400 border-amber-500/30">Declassified</Badge>;
       case "Redacted":
-        return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Redacted</Badge>;
+        return <Badge variant="outline" className="bg-red-950/30 text-red-400 border-red-500/30">Redacted</Badge>;
       case "Public":
       default:
-        return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Public</Badge>;
+        return <Badge variant="outline" className="bg-green-950/30 text-green-400 border-green-500/30">Public</Badge>;
     }
   };
 
@@ -273,18 +273,18 @@ const Documents = () => {
                   className="group"
                   style={{ "--index": index } as React.CSSProperties}
                 >
-                  <Card className="h-full overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg">
-                    <CardContent className="p-5 animate-enter">
+                  <Card className="glass-panel h-full border-muted/30 hover:border-primary/50 transition-all duration-300">
+                    <CardContent className="p-5">
                       <div className="flex justify-between items-start mb-3">
                         {getDocIcon(doc.type)}
                         {getClassificationBadge(doc.classification)}
                       </div>
-                      <h3 className="font-medium text-base group-hover:text-primary transition-colors truncate">{doc.title}</h3>
+                      <h3 className="font-medium text-base group-hover:text-primary transition-colors mb-2">{doc.title}</h3>
                       <div className="flex items-center justify-between mt-3">
                         <span className="text-xs text-muted-foreground">{doc.date}</span>
-                        <Badge variant="secondary" className="text-xs">{doc.category}</Badge>
+                        <Badge variant="secondary" className="text-xs bg-secondary/50">{doc.category}</Badge>
                       </div>
-                      <div className="mt-3 pt-3 border-t text-xs text-muted-foreground">
+                      <div className="mt-3 pt-3 border-t border-muted/20 text-xs text-muted-foreground">
                         {doc.agency}
                       </div>
                     </CardContent>
@@ -293,8 +293,8 @@ const Documents = () => {
               ))}
             </div>
           ) : (
-            <div className="border rounded-lg overflow-hidden">
-              <table className="min-w-full divide-y">
+            <div className="border rounded-lg overflow-hidden border-muted/30">
+              <table className="min-w-full divide-y divide-muted/20">
                 <thead className="bg-muted/50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Document</th>
@@ -304,11 +304,11 @@ const Documents = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Classification</th>
                   </tr>
                 </thead>
-                <tbody className="bg-card divide-y">
+                <tbody className="bg-card/50 divide-y divide-muted/20">
                   {filteredDocuments.map((doc) => (
                     <tr 
                       key={doc.id} 
-                      className="hover:bg-muted/50 transition-colors"
+                      className="hover:bg-muted/30 transition-colors"
                     >
                       <td className="px-6 py-4">
                         <Link to={`/documents/${doc.id}`} className="flex items-center">
@@ -318,7 +318,7 @@ const Documents = () => {
                       </td>
                       <td className="px-6 py-4 text-sm text-muted-foreground">{doc.date}</td>
                       <td className="px-6 py-4">
-                        <Badge variant="secondary">{doc.category}</Badge>
+                        <Badge variant="secondary" className="bg-secondary/50">{doc.category}</Badge>
                       </td>
                       <td className="px-6 py-4 text-sm">{doc.agency}</td>
                       <td className="px-6 py-4">

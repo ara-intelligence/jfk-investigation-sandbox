@@ -118,7 +118,8 @@
   }
 
   .animate-enter {
-    @apply opacity-0 translate-y-4;
+    opacity: 0;
+    transform: translateY(4px);
     animation: enter 0.4s ease-out forwards;
     animation-delay: calc(var(--index) * 0.05s);
   }
