@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +22,7 @@ const PersonDetail = lazy(() => import("./pages/PersonDetail"));
 const Timeline = lazy(() => import("./pages/Timeline"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Search = lazy(() => import("./pages/Search"));
+const Map = lazy(() => import("./pages/Map"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,6 +69,7 @@ const App = () => (
                 <Route path="notes" element={<Notes />} />
                 <Route path="search" element={<Search />} />
                 <Route path="search/:query" element={<Search />} />
+                <Route path="map" element={<Map />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>

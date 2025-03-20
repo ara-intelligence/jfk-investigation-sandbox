@@ -12,7 +12,8 @@ import {
   FileText,
   Bell,
   CheckCircle,
-  Flag
+  Flag,
+  Map
 } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import { useState } from "react";
@@ -55,6 +56,11 @@ const menuItems = [
     title: "Investigation Notes",
     path: "/notes",
     icon: BookOpen,
+  },
+  {
+    title: "Evidence Map",
+    path: "/map",
+    icon: Map,
   },
   {
     title: "Global Search",
