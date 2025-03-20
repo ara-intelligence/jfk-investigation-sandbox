@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
-// Sample document data
 const documents = {
   "1": {
     id: "1",
@@ -44,10 +43,8 @@ const documents = {
       keywords: ["Jack Ruby", "Lee Harvey Oswald", "Dallas Police Department", "Warren Commission"]
     }
   },
-  // Other documents would be defined here
 };
 
-// Sample notes for this document
 const sampleNotes = [
   { 
     id: "note1", 
@@ -63,7 +60,6 @@ const sampleNotes = [
   },
 ];
 
-// Sample connections to other entities
 const connections = [
   { type: "person", id: "p1", name: "Jack Ruby", relationship: "Subject of Interview" },
   { type: "person", id: "p2", name: "Lee Harvey Oswald", relationship: "Mentioned" },
@@ -157,17 +153,21 @@ const DocumentViewer = () => {
             </TabsList>
             
             <TabsContent value="document" className="mt-0">
-              <Card>
+              <Card className="glass-panel shadow-lg border-primary/10">
                 <CardContent className="p-6">
-                  <div className="h-[70vh] overflow-y-auto bg-white dark:bg-black/50 p-6 rounded border whitespace-pre-line font-mono text-sm">
-                    {document.content}
+                  <div className="h-[70vh] overflow-y-auto document-bg rounded-md border border-primary/20 whitespace-pre-line font-mono text-sm p-6 shadow-inner relative">
+                    <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-50 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,127,0.05),transparent_50%)] pointer-events-none"></div>
+                    <div className="relative z-10">
+                      {document.content}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
             </TabsContent>
             
             <TabsContent value="annotations" className="mt-0">
-              <Card>
+              <Card className="glass-panel shadow-lg border-primary/10">
                 <CardContent className="p-6">
                   <div className="mb-4">
                     <h3 className="text-lg font-medium mb-2">Document Annotations</h3>
@@ -204,7 +204,7 @@ const DocumentViewer = () => {
             </TabsContent>
             
             <TabsContent value="connections" className="mt-0">
-              <Card>
+              <Card className="glass-panel shadow-lg border-primary/10">
                 <CardContent className="p-6">
                   <div className="mb-4">
                     <h3 className="text-lg font-medium mb-2">Document Connections</h3>
@@ -261,7 +261,7 @@ const DocumentViewer = () => {
             </TabsContent>
             
             <TabsContent value="metadata" className="mt-0">
-              <Card>
+              <Card className="glass-panel shadow-lg border-primary/10">
                 <CardContent className="p-6">
                   <div className="mb-4">
                     <h3 className="text-lg font-medium mb-2">Document Metadata</h3>
@@ -336,7 +336,7 @@ const DocumentViewer = () => {
         </div>
         
         <div className="xl:w-96">
-          <Card className="h-full">
+          <Card className="glass-panel h-full shadow-lg border-primary/10">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium">Investigation Notes</h3>
@@ -347,7 +347,7 @@ const DocumentViewer = () => {
               
               <div className="space-y-4 mb-4 max-h-[40vh] overflow-y-auto">
                 {notes.map((note) => (
-                  <div key={note.id} className="p-3 bg-muted/50 rounded-lg">
+                  <div key={note.id} className="p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/10 shadow-sm">
                     <p className="text-sm">{note.text}</p>
                     <div className="flex justify-between items-center mt-2 text-xs text-muted-foreground">
                       <span>Page {note.page}</span>
@@ -357,10 +357,10 @@ const DocumentViewer = () => {
                 ))}
               </div>
               
-              <div className="pt-4 border-t">
+              <div className="pt-4 border-t border-primary/10">
                 <Textarea
                   placeholder="Add a new note about this document..."
-                  className="mb-3 min-h-24"
+                  className="mb-3 min-h-24 bg-background/70 backdrop-blur-sm border-primary/20"
                   value={newNote}
                   onChange={(e) => setNewNote(e.target.value)}
                 />
