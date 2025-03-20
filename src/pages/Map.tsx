@@ -1,7 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Globe from "globe.gl";
-import * as THREE from "three";
 import { Info, Shield, Compass, MapPin } from "lucide-react";
 import { 
   Card, 
@@ -49,8 +48,8 @@ const MapPage = () => {
   useEffect(() => {
     if (!globeEl.current) return;
     
-    // Create the globe instance - properly instantiate with new
-    globe.current = new Globe()(globeEl.current)
+    // Create the globe instance
+    globe.current = Globe()
       .globeImageUrl(customGlobeImageUrl)
       .backgroundColor("rgba(5, 5, 35, 1)")
       .atmosphereColor("rgba(65, 119, 134, 0.7)")
@@ -97,6 +96,9 @@ const MapPage = () => {
     // Add glow effect
     const globeMaterial = globe.current.globeMaterial();
     globeMaterial.bumpScale = 5;
+    
+    // Mount the globe
+    globe.current(globeEl.current);
     
     // Add event listener for points
     globe.current.onPointClick(point => {
@@ -224,4 +226,3 @@ const MapPage = () => {
 };
 
 export default MapPage;
-
