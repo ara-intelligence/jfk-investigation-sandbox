@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Documents from "./pages/Documents";
 import Persons from "./pages/Persons";
 import Notes from "./pages/Notes";
+import Map from "./pages/Map";
 
 // Lazy load less frequently accessed pages
 const DocumentViewer = lazy(() => import("./pages/DocumentViewer"));
@@ -22,7 +23,6 @@ const PersonDetail = lazy(() => import("./pages/PersonDetail"));
 const Timeline = lazy(() => import("./pages/Timeline"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Search = lazy(() => import("./pages/Search"));
-const Map = lazy(() => import("./pages/Map"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
