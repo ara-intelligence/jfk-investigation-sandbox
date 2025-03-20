@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { 
   Search as SearchIcon, 
   Filter, 
@@ -10,7 +11,7 @@ import {
   MessageSquare,
   Flag
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,6 +29,7 @@ import {
   CommandSeparator
 } from "@/components/ui/command";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/components/ui/use-toast";
 
 // Sample search results data
 const searchResults = {
@@ -92,11 +94,24 @@ const searchResults = {
 };
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { query: urlQuery } = useParams<{ query: string }>();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  
+  const [searchQuery, setSearchQuery] = useState(urlQuery || "");
   const [isSearching, setIsSearching] = useState(false);
-  const [searchPerformed, setSearchPerformed] = useState(false);
+  const [searchPerformed, setSearchPerformed] = useState(!!urlQuery);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
-  const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
+  const [activeQuestion, setActiveQuestion] = useState<string | null>(urlQuery || null);
+  
+  // Effect to handle URL param changes
+  useEffect(() => {
+    if (urlQuery) {
+      setSearchQuery(urlQuery);
+      setActiveQuestion(urlQuery);
+      performSearch(urlQuery);
+    }
+  }, [urlQuery]);
   
   // Common investigation questions
   const investigationQuestions = [
@@ -107,8 +122,8 @@ const Search = () => {
     "Missing evidence from autopsy reports"
   ];
   
-  const handleSearch = () => {
-    if (!searchQuery.trim()) return;
+  const performSearch = (query: string) => {
+    if (!query.trim()) return;
     
     setIsSearching(true);
     
@@ -117,6 +132,22 @@ const Search = () => {
       setIsSearching(false);
       setSearchPerformed(true);
     }, 500);
+  };
+  
+  const handleSearch = () => {
+    if (!searchQuery.trim()) return;
+    
+    // Update URL for bookmarking
+    navigate(`/search/${encodeURIComponent(searchQuery)}`);
+    
+    // Show toast notification
+    toast({
+      title: "URL updated",
+      description: "You can now bookmark this search result.",
+      duration: 3000
+    });
+    
+    performSearch(searchQuery);
   };
   
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -128,7 +159,19 @@ const Search = () => {
   const askQuestion = (question: string) => {
     setSearchQuery(question);
     setActiveQuestion(question);
-    handleSearch();
+    navigate(`/search/${encodeURIComponent(question)}`);
+    performSearch(question);
+  };
+  
+  const copySearchLink = () => {
+    const url = `${window.location.origin}/search/${encodeURIComponent(searchQuery)}`;
+    navigator.clipboard.writeText(url);
+    
+    toast({
+      title: "Search URL copied",
+      description: "Link has been copied to clipboard",
+      duration: 3000
+    });
   };
   
   return (
@@ -178,6 +221,25 @@ const Search = () => {
               </Badge>
             ))}
           </div>
+          
+          {searchPerformed && (
+            <div className="mt-4 pt-4 border-t border-primary/10">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">
+                  Current search: <span className="text-primary font-medium">{searchQuery}</span>
+                </span>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="flex items-center gap-1"
+                  onClick={copySearchLink}
+                >
+                  <LinkIcon className="h-3.5 w-3.5" />
+                  Copy Link
+                </Button>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
       

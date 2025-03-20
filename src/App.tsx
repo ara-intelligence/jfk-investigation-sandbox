@@ -68,6 +68,7 @@ const App = () => (
                 <Route path="timeline" element={<Timeline />} />
                 <Route path="notes" element={<Notes />} />
                 <Route path="search" element={<Search />} />
+                <Route path="search/:query" element={<Search />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
