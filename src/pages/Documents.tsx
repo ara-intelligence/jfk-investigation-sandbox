@@ -10,7 +10,8 @@ import {
   FileAudio, 
   FileLock, 
   Table,
-  Grid
+  Grid,
+  Database
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -182,6 +183,10 @@ const Documents = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Background graphical elements */}
+      <div className="fixed inset-0 z-[-1] terminal-grid overflow-hidden pointer-events-none opacity-70"></div>
+      <div className="fixed inset-0 z-[-2] bg-gradient-to-br from-[#081910] to-[#0a2015] pointer-events-none"></div>
+      
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">Documents</h1>
@@ -214,7 +219,7 @@ const Documents = () => {
           <Input
             type="search"
             placeholder="Search documents..."
-            className="pl-8"
+            className="pl-8 bg-black/30 border-primary/20 focus:border-primary/50"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -222,7 +227,7 @@ const Documents = () => {
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-1">
+            <Button variant="outline" className="flex items-center gap-1 border-primary/20 bg-black/30">
               <Filter className="h-4 w-4 mr-1" />
               Filter
               <ChevronDown className="h-4 w-4 ml-1" />
@@ -240,7 +245,7 @@ const Documents = () => {
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-1">
+            <Button variant="outline" className="flex items-center gap-1 border-primary/20 bg-black/30">
               <FileLock className="h-4 w-4 mr-1" />
               Classification
               <ChevronDown className="h-4 w-4 ml-1" />
@@ -256,11 +261,11 @@ const Documents = () => {
       </div>
       
       <Tabs defaultValue="all" className="w-full">
-        <TabsList className="mb-4">
-          <TabsTrigger value="all">All Files</TabsTrigger>
-          <TabsTrigger value="1992">1992 Release</TabsTrigger>
-          <TabsTrigger value="2017">2017 Release</TabsTrigger>
-          <TabsTrigger value="2021">2021 Release</TabsTrigger>
+        <TabsList className="mb-4 bg-black/40 border border-primary/10">
+          <TabsTrigger value="all" className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary">All Files</TabsTrigger>
+          <TabsTrigger value="1992" className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary">1992 Release</TabsTrigger>
+          <TabsTrigger value="2017" className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary">2017 Release</TabsTrigger>
+          <TabsTrigger value="2021" className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary">2021 Release</TabsTrigger>
         </TabsList>
         
         <TabsContent value="all" className="mt-0">
@@ -270,10 +275,10 @@ const Documents = () => {
                 <Link 
                   to={`/documents/${doc.id}`} 
                   key={doc.id}
-                  className="group"
-                  style={{ "--index": index } as React.CSSProperties}
+                  className="group animate-fade-in"
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  <Card className="glass-panel h-full border-muted/30 hover:border-primary/50 transition-all duration-300">
+                  <Card className="glass-panel h-full border-muted/30 hover:border-primary/50 transition-all duration-300 bg-black/40 backdrop-blur-md">
                     <CardContent className="p-5">
                       <div className="flex justify-between items-start mb-3">
                         {getDocIcon(doc.type)}
@@ -293,22 +298,22 @@ const Documents = () => {
               ))}
             </div>
           ) : (
-            <div className="border rounded-lg overflow-hidden border-muted/30">
-              <table className="min-w-full divide-y divide-muted/20">
-                <thead className="bg-muted/50">
+            <div className="border rounded-lg overflow-hidden border-primary/20 bg-black/40 backdrop-blur-sm">
+              <table className="min-w-full divide-y divide-primary/10">
+                <thead className="bg-black/60">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Document</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Date</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Category</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Agency</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Classification</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Document</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Category</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Agency</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Classification</th>
                   </tr>
                 </thead>
-                <tbody className="bg-card/50 divide-y divide-muted/20">
+                <tbody className="divide-y divide-primary/10">
                   {filteredDocuments.map((doc) => (
                     <tr 
                       key={doc.id} 
-                      className="hover:bg-muted/30 transition-colors"
+                      className="hover:bg-primary/10 transition-colors"
                     >
                       <td className="px-6 py-4">
                         <Link to={`/documents/${doc.id}`} className="flex items-center">
@@ -333,23 +338,29 @@ const Documents = () => {
         </TabsContent>
         
         <TabsContent value="1992" className="mt-0">
-          <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : ""}>
-            {/* Similar content structure, filtered for 1992 releases */}
-            <div className="text-center py-12">
+          <div className="flex items-center justify-center h-64 bg-black/30 border border-primary/10 rounded-lg backdrop-blur-sm">
+            <div className="text-center flex flex-col items-center gap-3">
+              <Database className="h-12 w-12 text-primary/40" />
               <p className="text-muted-foreground">Displaying 1992 Release files</p>
             </div>
           </div>
         </TabsContent>
         
         <TabsContent value="2017" className="mt-0">
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Displaying 2017 Release files</p>
+          <div className="flex items-center justify-center h-64 bg-black/30 border border-primary/10 rounded-lg backdrop-blur-sm">
+            <div className="text-center flex flex-col items-center gap-3">
+              <Database className="h-12 w-12 text-primary/40" />
+              <p className="text-muted-foreground">Displaying 2017 Release files</p>
+            </div>
           </div>
         </TabsContent>
         
         <TabsContent value="2021" className="mt-0">
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Displaying 2021 Release files</p>
+          <div className="flex items-center justify-center h-64 bg-black/30 border border-primary/10 rounded-lg backdrop-blur-sm">
+            <div className="text-center flex flex-col items-center gap-3">
+              <Database className="h-12 w-12 text-primary/40" />
+              <p className="text-muted-foreground">Displaying 2021 Release files</p>
+            </div>
           </div>
         </TabsContent>
       </Tabs>
